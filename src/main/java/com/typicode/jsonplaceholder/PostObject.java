@@ -30,7 +30,7 @@ public class PostObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PostObject that = (PostObject) o;
-        return id == that.id && Objects.equals(title, that.title) && Objects.equals(body, that.body);
+        return userId == that.userId && Objects.equals(title, that.title) && Objects.equals(body, that.body);
     }
 
     @Override
