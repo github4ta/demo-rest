@@ -9,4 +9,15 @@ public class RestTest {
     public void testGetPostById(){
        given().when().get("https://jsonplaceholder.typicode.com/posts/1").then().log().body();
     }
+
+    @Test
+    public void testCreatePost(){
+        String body = "{\n" +
+                "    \"title\": \"My name\",\n" +
+                "    \"body\": \"This is my first news\",\n" +
+                "    \"userId\": 1000\n" +
+                "}";
+        given().header("Content-type","application/json; charset=UTF-8").body(body).post("https://jsonplaceholder.typicode.com/posts").then().log().body();
+    }
+
 }
