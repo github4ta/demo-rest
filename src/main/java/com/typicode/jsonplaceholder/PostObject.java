@@ -12,4 +12,14 @@ public class PostObject {
         this.title = title;
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        return "PostObject{" +
+                "userId=" + userId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }
