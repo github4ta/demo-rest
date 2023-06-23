@@ -11,17 +11,17 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class RestTest {
     @Test
-    public void testGetPostById(){
-       given().when().get("https://jsonplaceholder.typicode.com/posts/1").then().log().body();
+    public void testGetPostById() {
+        given().when().get("https://jsonplaceholder.typicode.com/posts/1").then().log().body();
     }
 
     @Test
-    public void testCreatePost(){
+    public void testCreatePost() {
         PostObject po = new PostObject(1000, 1, "Hello", "Hello from rest");
-        given().header("Content-type","application/json; charset=UTF-8").body(po)
+        given().header("Content-type", "application/json; charset=UTF-8").body(po)
                 .when().post("https://jsonplaceholder.typicode.com/posts").then();
 
-        ValidatableResponse responce = given().header("Content-type","application/json; charset=UTF-8").body(po)
+        ValidatableResponse responce = given().header("Content-type", "application/json; charset=UTF-8").body(po)
                 .when().post("https://jsonplaceholder.typicode.com/posts").then();
 
         PostObject poActual = responce.extract().as(PostObject.class);
@@ -31,7 +31,7 @@ public class RestTest {
     }
 
     @Test
-    public void testEdostavka(){
+    public void testEdostavka() {
         String body = "{\n" +
                 "    \"CRC\": \"\",\n" +
                 "    \"Packet\": {\n" +
@@ -53,7 +53,7 @@ public class RestTest {
     }
 
     @Test
-    public void testRedfin(){
+    public void testRedfin() {
         HashMap<String, String> formParams = new HashMap<>();
         formParams.put("email", "test@test.com");
         formParams.put("pwd", "1q2w3e4r");
@@ -62,7 +62,7 @@ public class RestTest {
     }
 
     @Test
-    public void testDominos(){
+    public void testDominos() {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("language", "ru");
         queryParams.put("cityId", "2");
@@ -71,5 +71,17 @@ public class RestTest {
                 "   \"password\":\"\"\n" +
                 "}";
         given().when().queryParams(queryParams).body(body).post("https://www.dominos.by/api/web/user/session").then().log().body();
+    }
+
+    @Test
+    public void testMarkformelle() {
+        HashMap<String, String> formParams = new HashMap<>();
+        formParams.put("backurl", "/");
+        formParams.put("AUTH_FORM", "Y");
+        formParams.put("TYPE", "AUTH");
+        formParams.put("USER_LOGIN", "test@test.com");
+        formParams.put("USER_PASSWORD", "1q2w3e4r");
+        formParams.put("USER_REMEMBER", "Y");
+        given().when().formParams(formParams).post("https://markformelle.by/ajax/auth_ajax.php").then().log().body();
     }
 }
