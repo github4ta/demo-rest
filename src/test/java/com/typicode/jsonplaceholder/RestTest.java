@@ -60,4 +60,16 @@ public class RestTest {
         formParams.put("authenticationAuthority", "Redfin");
         given().when().formParams(formParams).post("https://www.redfin.com/stingray/do/api-login").then().log().body();
     }
+
+    @Test
+    public void testDominos(){
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("language", "ru");
+        queryParams.put("cityId", "2");
+        String body = "{\n" +
+                "   \"login\":\"\",\n" +
+                "   \"password\":\"\"\n" +
+                "}";
+        given().when().queryParams(queryParams).body(body).post("https://www.dominos.by/api/web/user/session").then().log().body();
+    }
 }
