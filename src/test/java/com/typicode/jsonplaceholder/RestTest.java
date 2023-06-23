@@ -4,6 +4,8 @@ import io.restassured.response.ValidatableResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -50,4 +52,12 @@ public class RestTest {
         given().when().body(body).post("https://api.static.edostavka.by/rest/Json").then().log().body();
     }
 
+    @Test
+    public void testRedfin(){
+        HashMap<String, String> formParams = new HashMap<>();
+        formParams.put("email", "test@test.com");
+        formParams.put("pwd", "1q2w3e4r");
+        formParams.put("authenticationAuthority", "Redfin");
+        given().when().formParams(formParams).post("https://www.redfin.com/stingray/do/api-login").then().log().body();
+    }
 }
