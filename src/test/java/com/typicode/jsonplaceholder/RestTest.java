@@ -1,5 +1,6 @@
 package com.typicode.jsonplaceholder;
 
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,7 +8,6 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class RestTest {
     @Test
@@ -94,5 +94,40 @@ public class RestTest {
                 "    }\n" +
                 "}";
         given().when().header("Content-Type", "application/json").body(body).post("https://www.21vek.by/users/login/").then().log().body();
+    }
+
+    @Test
+    public void testTous() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("client_id", "web_ey");
+        queryParams.put("client_secret", "secret");
+        queryParams.put("grant_type", "password");
+        queryParams.put("username", "");
+        queryParams.put("password", "");
+        given().when().queryParams(queryParams).post("https://www.tous.com/authorizationserver/oauth/token").then().log().body();
+    }
+
+    @Test
+    public void testMarko() {
+        HashMap<String, String> formParams = new HashMap<>();
+        formParams.put("form_data", "login=%2B375%20(29)%20655-00-09&password=1q2w3e4r");
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        headers.put("X-Requested-With", "XMLHttpRequest");
+        given().when().headers(headers).formParams(formParams).post("https://www.marko.by/ajax/authClient.php").then().log().body();
+    }
+
+    @Test
+    public void testDev() {
+        String body = "{\"user\":{\"login\":\"test@test.com\",\"password\":\"1q2w3e4r\"}}";
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json;charset=UTF-8");
+        headers.put("X-Requested-With", "XMLHttpRequest");
+        headers.put("Origin", "https://id.devby.io");
+        headers.put("Referer", "https://id.devby.io/@/hello");
+
+        RestAssured.urlEncodingEnabled = false;
+
+        given().when().headers(headers).body(body).post("https://id.devby.io/@/hello").then().log().body();
     }
 }
