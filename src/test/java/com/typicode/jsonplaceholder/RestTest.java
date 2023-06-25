@@ -130,4 +130,11 @@ public class RestTest {
 
         given().when().headers(headers).body(body).post("https://id.devby.io/@/hello").then().log().body();
     }
+
+    @Test
+    public void testMegatop() {
+        String body = "{\"email\":\"375296550009\",\"password\":\"1q2w3e4r\"}";
+
+        given().when().body(body).header("Content-Type", "application/json").post("https://admin.megatop.by/api/v1/user/login").then().log().body();
+    }
 }
