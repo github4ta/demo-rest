@@ -149,4 +149,21 @@ public class RestTest {
 
         given().when().body(body).header("Content-Type", "application/json").post("https://login.vodafone.co.uk/api/authentication/password").then().log().body();
     }
+
+    @Test
+    public void testKufar() {
+        String body = "{\n" +
+                "   \"password\":\"1q2w3e4r\",\n" +
+                "   \"recaptcha_user_response\":\"\",\n" +
+                "   \"recaptcha_secret_version\":\"v1\",\n" +
+                "   \"recaptcha_platform\":\"web\",\n" +
+                "   \"lang\":\"ru\",\n" +
+                "   \"login\":\"test1323@test.com\",\n" +
+                "   \"visitorId\":\"6f6e73b79e9218897524c719562e6afa\"\n" +
+                "}";
+
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("token_type", "user");
+        given().when().queryParams(queryParams).body(body).post("https://www.kufar.by/l/api/login/v2/auth/signin").then().log().body();
+    }
 }
