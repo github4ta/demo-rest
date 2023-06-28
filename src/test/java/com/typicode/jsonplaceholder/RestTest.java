@@ -58,7 +58,7 @@ public class RestTest {
         formParams.put("email", "test@test.com");
         formParams.put("pwd", "1q2w3e4r");
         formParams.put("authenticationAuthority", "Redfin");
-        given().when().formParams(formParams).post("https://www.redfin.com/stingray/do/api-login").then().log().body();
+        given().formParams(formParams).when().post("https://www.redfin.com/stingray/do/api-login").then().log().body();
     }
 
     @Test
@@ -126,7 +126,7 @@ public class RestTest {
         headers.put("Origin", "https://id.devby.io");
         headers.put("Referer", "https://id.devby.io/@/hello");
 
-        RestAssured.urlEncodingEnabled = false;
+        //RestAssured.urlEncodingEnabled = false;
 
         given().when().headers(headers).body(body).post("https://id.devby.io/@/hello").then().log().body();
     }
@@ -165,5 +165,23 @@ public class RestTest {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("token_type", "user");
         given().when().queryParams(queryParams).body(body).post("https://www.kufar.by/l/api/login/v2/auth/signin").then().log().body();
+    }
+
+    @Test
+    public void testMeetup() {
+        String body = "{\"operationName\":\"login\",\"variables\":{\"input\":{\"email\":\"tbalashevich@bk.ru\",\"password\":\"testinG@2579!\",\"rememberMe\":false}},\"query\":\"mutation login($input: LoginInput!) {\\n  login(input: $input) {\\n    verificationRequired\\n    memberId\\n    reverifyToken\\n    error {\\n      ...Error\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\\nfragment Error on PayloadError {\\n  code\\n  message\\n  field\\n  __typename\\n}\\n\"}";
+
+        given().when().body(body).post("https://www.meetup.com/gql").then().log().body();
+    }
+
+    @Test
+    public void testYR() {
+        String body = "{\n" +
+                "    \"email\": \"test2@test.com\",\n" +
+                "    \"password\": \"1q2w3e4r\",\n" +
+                "    \"remember\": true\n" +
+                "}";
+
+        given().header("Accept", "application/json").header("Content-Type", "application/json").body(body).when().post("https://api.y-r.by/api/v1/token").then().log().body();
     }
 }
